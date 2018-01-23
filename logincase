@@ -8,11 +8,11 @@ echo '<a href="logout.php">Logout</a>';
 ----------------------------
 if(isset($_POST['send']))
 {
-    $user = $_POST['user'];
-    $pass = $_POST['pass'];
+    //$user = $_POST['user'];
+    //$pass = $_POST['pass'];
     
-    $username = '';
-    $password = '';
+    //$username = '';
+    //$password = '';
     
     if($user == $username && $pass == $password)
     {
