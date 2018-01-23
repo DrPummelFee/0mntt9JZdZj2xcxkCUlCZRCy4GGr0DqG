@@ -1,0 +1,45 @@
+Quelle: http://sql.lernenhoch2.de/lernen/sql-fortgeschritten/join-tabelle-zusammenfugen/
+
+
+JOIN – Tabellen zusammenfügen
+
+Mit JOINS kann man zwei oder mehr Tabellen zusammenfügen, solange es eine Verbindung zwischen den Tabellen gibt.
+
+JOIN Syntax
+1
+
+	
+SELECT spalten_name FROM tabelle1 JOIN tabelle2 ON tabelle1.spalten_name = tabelle2.spalten_name
+
+
+Versuchen wir das ganze mal an einem konkreten Beispiel. Im Teil SQL für Fortgeschrittene haben wir ein paar neue Testtabellen angelegt, mit denen wir jetzt arbeiten werden. Als erstes machen wir ein einfachen SELECT, indem wir alle Fragen aus der Tabelle „questions“ selektieren:
+1
+
+	
+SELECT * FROM questions
+
+
+Nun möchten wir auf unserer Website alle Fragen ausgeben + den Benutzernamen des Benutzers, der die Frage gestellt hat. Doch leider haben wir in der Tabelle „questions“ keinen Benutzernamen, sondern nur die ID des „users“ und an dieser Stelle kommt JOIN ins Spiel. Da wir mit JOIN zwei Tabellen zusammenfügen können, werden wir nun die Tabelle „users“ und die Tabelle „questions“ komplett selektieren. Das können wir machen, da die Tabellen eine Verbindung haben, und zwar die ID des Benutzers.
+1
+
+	
+SELECT * FROM users JOIN questions ON users.id = questions.user_id
+
+
+Bei einem JOIN ALL (*) werden alle Spalten der einen Tabelle mit allen Spalten der anderen Tabelle zusammengepackt, solange eine Übereinstimmung gefunden wurde. Unser JOIN hat geklappt und wir haben nun die Fragen mit den Benutzernamen assoziiert. Doch es gibt hier einige Mängel:
+
+    Die Spalte „created“ ist in der Ergebnis-Tabelle zweimal vorhanden, einmal das users.created (Benutzeraccount erstellt) und einmal questions.created (Frage gestellt).
+    Außerdem haben wir vielmehr Spalten im Result Set (Ergebnis Tabelle) als wir eigentlich brauchen und man sollte immer nur das selektieren, was man auch braucht.
+
+Deshalb werden wir unseren Query überarbeiten:
+1
+2
+3
+4
+	
+SELECT users.username, questions.question, 
+questions.created AS frage_erstellt
+FROM users JOIN questions 
+ON users.id = questions.user_id
+
+Dieses Result Set hat genau die Werte die wir brauchen, die Frage und den Benutzernamen des Fragestellers + Wann die Frage gestellt wurde. Dies ist ein recht einfacher JOIN der dennoch häufig gebraucht wird (gerade bei Webanwendungen). Doch es gibt noch weitere JOIN-Typen die im folgenden behandelt werden.
