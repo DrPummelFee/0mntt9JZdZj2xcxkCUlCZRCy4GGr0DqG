@@ -5,6 +5,7 @@ session_start();
 if(isset($_SESSION['userid']))
 {
 echo '<a href="logout.php">Logout</a>';
+----------------------------
 if(isset($_POST['send']))
 {
     $user = $_POST['user'];
@@ -22,3 +23,13 @@ if(isset($_POST['send']))
         $error = true;
     }
 }
+----------------------------
+if(isset($_SESSION['userid']))
+{
+ // Hier kommt das rein was der User sehen soll
+}
+else
+{
+    echo 'Du bist nicht eingeloggt! -> <a href="login_form.php">Auf gehts</a>';
+}
+?>
