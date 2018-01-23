@@ -1,0 +1,59 @@
+// Verbindung zu Datenbank herstellen - Reihenfolge: 
+    // Serveradresse, Benutzername, Passwort, Datenbankname
+    $db_conn = mysqli_connect($db_server, $db_user, $db_pass, $db_name);
+    
+    $username   = $_POST['username'];
+    $email      = $_POST['email'];
+    $password   = $_POST['password'];
+    
+    
+    $sql_regi1 = "SELECT * FROM users WHERE email = '$email'";
+    $result_regi1 = $db_conn->query($sql_regi1);
+    
+    if ($result_regi1->num_rows != 0)
+    {
+
+        header("Location: $URL_referer");
+        $error_regi = 1;
+    }
+
+    
+    $sql_regi2 = "SELECT * FROM users WHERE username = '$username'";
+    $result_regi2 = $db_conn->query($sql_regi2);
+    
+    if ($result_regi2->num_rows != 0)
+    {
+
+        header("Location: $URL_referer");
+        $error_regi = 1;
+    }
+    
+    
+    if($error_regi == 0)
+    {
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $sql_regi3 = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password_hash')";
+        
+        if(mysqli_query($db_conn, $sql_regi3))
+        {
+
+            header("Location: $URL_referer");
+        }
+        else
+        {
+
+            header("Location: $URL_referer");
+        }
+        
+    }
+    else
+    {       
+
+        header("Location: $URL_referer");
+    }
+}
+else
+{
+
+    header("Location: $URL_referer");
+}
